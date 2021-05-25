@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' buildActiveScheme='true'>
+    <pages>
+        <page name='Interview'/>
+        <page name='DS-Stack'/>
+        <page name='Recursion'/>
+        <page name='Others'/>
+        <page name='Untitled Page'/>
+        <page name='OLA-Round 2'/>
+        <page name='ION'/>
+    </pages>
+</playground>
