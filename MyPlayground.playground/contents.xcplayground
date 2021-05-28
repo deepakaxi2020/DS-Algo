@@ -9,5 +9,6 @@
         <page name='OLA-Round 2'/>
         <page name='ION'/>
         <page name='Sorting'/>
+        <page name='Binary Tree'/>
     </pages>
 </playground>

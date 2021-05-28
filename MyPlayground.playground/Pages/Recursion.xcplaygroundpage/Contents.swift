@@ -140,7 +140,9 @@ func insertElementInSortedStack(stack: Stack<Int>, element: Int) -> Stack<Int> {
     // base condition
     var localStack = stack
 
-    guard !stack.isEmpty(), let topPeepElement = stack.peep(), topPeepElement > element else {
+    guard !stack.isEmpty(),
+          let topPeepElement = stack.peep(),
+          topPeepElement > element else {
         localStack.push(value: element)
         return localStack
     }
@@ -150,8 +152,9 @@ func insertElementInSortedStack(stack: Stack<Int>, element: Int) -> Stack<Int> {
         return localStack
     }
 
-    guard let topElement = localStack.pop() else { localStack.push(value: element)
-
+    // stored top elemnt locally and will be added to stack after recursive call
+    guard let topElement = localStack.pop() else {
+        localStack.push(value: element)
         return localStack
     }
 
@@ -347,3 +350,114 @@ func newFeedsFetched(feeds: [Int], currentFeeds: [Int]) -> [Int] {
 
 print("feeds problem")
 print(newFeedsFetched(feeds: [3,4,1], currentFeeds: curFeeds))
+
+
+//Median of two sorted arrays of same size
+// constraints -> same length array
+
+func median(ar1:[Int], ar2:[Int], length: Int) -> Int {
+    var result = -1
+    if length == 1 {
+        // if there are single item then return median
+
+        guard let ar1Item = ar1.first, let ar2Item = ar2.first else { return -1 }
+        return (ar1Item + ar2Item ) / 2
+    }
+
+    if ( length == 2 ) {
+        return (max(ar1[0], ar2[0]) + min(ar1[1], ar2[1])) / 2
+    }
+    let mid: Int =  Int(ceil(Double(length/2)))
+    if ( ar1[mid] < ar1[mid] ) {
+        result = median(ar1: Array(ar1[mid...]), ar2: Array(ar2[0...mid]), length: mid + 1)
+    } else {
+        result = median(ar1: Array(ar1[0...mid]), ar2: Array(ar2[mid...]), length: mid + 1)
+    }
+
+    return result
+}
+
+//print(median(ar1: [1, 12, 15, 26, 38], ar2: [2, 13, 17, 30, 45], length: 5))
+
+
+
+func getUniqueChar(str: String, startIndex:Int) -> Int {
+    var distinct = [Character]()
+    var count = 0
+    for i in startIndex..<str.count {
+        let item = str[i]
+        if distinct.contains(item) {
+            print("For string " , str, "starting", startIndex, "count", count)
+            return count
+        } else {
+            count += 1
+            distinct.append(item)
+        }
+    }
+
+    print("For string " , str, "count", count)
+    return count
+}
+
+func longestSubString(s: String, startIndex: Int, container: inout [Int], count: Int) -> Int {
+
+    if startIndex == s.count {
+        return count
+    }
+
+    let count = getUniqueChar(str: s, startIndex: startIndex)
+
+    let newcount = longestSubString(s: s, startIndex: startIndex + 1, container: &container, count: count)
+
+    return max(count, newcount)
+
+}
+
+
+var array: [Int] = []
+var string = "abcabcdabc"
+
+print("longestSubString", longestSubString(s: string, startIndex: 0, container: &array, count: 0))
+
+
+
+class Solution {
+    func lengthOfLongestSubstring(_ s: String) -> Int {
+        var start: Int = 0
+        var end: Int = 0
+        var maxLength = -1
+        var characters: Dictionary<Character, Int> = [:]
+
+        while (end < s.count && start <= end) {
+            let item =  s[end]
+            if characters[item] != nil {
+                let previousIndex = characters[item]
+                start = max(previousIndex! + 1,start)
+                characters[item] = end
+
+            } else {
+                characters[item] = end
+            }
+
+            maxLength = max(maxLength, end - start + 1)
+            end += 1
+        }
+
+        print(characters)
+        return maxLength
+    }
+}
+
+extension StringProtocol {
+    subscript(offset: Int) -> Character {
+        self[index(startIndex, offsetBy: offset)]
+    }
+}
+
+
+let s = Solution()
+print("lengthOfLongestSubstring-> ",s.lengthOfLongestSubstring(string))
+
+
+
+

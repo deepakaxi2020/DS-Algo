@@ -35,7 +35,6 @@ struct SettingsViewModel {
 var set: Set<String> = []
 
 set.insert("somethig")
-
 set.contains("value:")
 
 
