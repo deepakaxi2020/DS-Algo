@@ -73,7 +73,7 @@ func diameterOfTree(node: Node?) -> Int {
         rDia = diameterOfTree(node: node?.right)
     }
 
-    let rootDia = lDia + rDia + 2
+    let rootDia = lDia + rDia + 1 // diameter is number of nodes in the path. So adding 1 as diameter passing through root
 
     return max(rootDia, max(lDia, rDia))
 }
@@ -264,3 +264,115 @@ print(obj.getMin())
 
 
 
+
+// In a binary tree if pivot node exist, print all the nodes from the same depth
+/*
+Input :
+            10
+      11          12
+   13   14      15    16
+
+ Pivot Node 14
+
+ Output [13, 14, 15, 16]
+ */
+
+var tree = Node(with: 10)
+tree.left = Node(with: 11)
+tree.right = Node(with: 12)
+tree.left!.left = Node(with: 13)
+tree.left!.right = Node(with: 14)
+tree.right!.left = Node(with: 15)
+tree.right!.right = Node(with: 16)
+
+tree.left!.left!.left = Node(with: 17)
+tree.left!.left!.right = Node(with: 18)
+tree.left!.right!.left = Node(with: 19)
+tree.left!.right!.right = Node(with: 20)
+
+tree.right!.left!.left = Node(with: 21)
+tree.right!.left!.right = Node(with: 22)
+tree.right!.right!.left = Node(with: 23)
+tree.right!.right!.right = Node(with: 20)
+
+
+
+var printDepthNodesArray: [Int] = []
+func printDepthNodes(root: Node?, pivot: Node, array: inout [Int], level: Int) {
+
+    guard let root = root else {
+        return
+    }
+    if let left = root.left {
+        array.append(left.value)
+    }
+
+    if let right = root.right {
+        array.append(right.value)
+    }
+    if let left = root.left {
+        printDepthNodes(root: left, pivot: Node(with: 14), array: &array, level: level + 1)
+    }
+
+    if let right = root.right {
+        printDepthNodes(root: right, pivot: Node(with: 14), array: &array, level: level + 1)
+    }
+}
+
+printDepthNodesArray.append(tree.value)
+printDepthNodes(root: tree, pivot: Node(with: 14), array: &printDepthNodesArray, level: 0)
+print(printDepthNodesArray)
+
+// Binary search tree inorder PREDECESSOR
+//https://www.youtube.com/watch?v=rukYFD8cYBY&list=PLeIMaH7i8JDj7DnmO7lll97P1yZjMCpgY&index=7
+
+func makeTreeForInorderPredecessor() -> Node {
+    let tree = Node(with: 10)
+    tree.left = Node(with: 6)
+    tree.right = Node(with: 12)
+    tree.left!.left = Node(with: 4)
+    tree.left!.right = Node(with: 8)
+    tree.right!.left = Node(with: 11)
+    tree.right!.right = Node(with: 16)
+    return tree
+
+    /*
+                10
+            6          12
+         4     8     11    16
+     */
+    // inorder traversal = 4 6 8 10 11 12 16
+
+}
+
+
+func findInorderPredecessor(tree: Node, targetValue: Int) -> Node {
+
+    // find node
+    var target: Node? = nil
+    var root: Node = tree
+    while true {
+        if root.value == targetValue {
+            target = root
+            break
+        }
+        if root.value > targetValue, let lTree = root.left {
+            root = lTree
+            continue
+        }
+        else if  root.value < targetValue, let rTree = root.right {
+            root = rTree
+            continue
+        }
+        break
+    }
+    if target == nil {
+        return Node(with: -1)
+    }
+
+
+    return Node(with: -1)
+}
+
+
+print("findInorderPredecessor = \(findInorderPredecessor(tree: makeTreeForInorderPredecessor(), targetValue: 10).value)")

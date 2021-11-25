@@ -10,5 +10,9 @@
         <page name='ION'/>
         <page name='Sorting'/>
         <page name='Binary Tree'/>
+        <page name='Graph'/>
+        <page name='LRU-LFU'/>
+        <page name='Hashable'/>
+        <page name='Bloomberg'/>
     </pages>
 </playground>
