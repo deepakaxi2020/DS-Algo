@@ -98,7 +98,7 @@ var input: [WorkingHours] = [
     }
     if !isValidTransaction { print("❌ FAILURE: Transaction \(transaction.startTime) - \(transaction.endTime) is not valid inside working Hours.\n\n")}
     return isValidTransaction
-}
+}   
 
 isValidTransaction(input: input, transaction: WorkingHours(start: 10, end: 2))
 isValidTransaction(input: input, transaction: WorkingHours(start: 1, end: 2))
